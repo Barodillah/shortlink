@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct access to internal directories and sensitive files
+    RewriteRule ^(app|config|database|storage)(/.*)?$ - [F,L]
+    RewriteRule ^(\.env|\.git|PRD\.md|README\.md|DEPLOYMENT\.md|composer\.(json|lock)) - [F,L]
+    RewriteRule \.(sql|log|ini|sh|bak)$ - [F,L]
+
+    # Route static assets to /public/assets/
+    RewriteCond %{REQUEST_URI} /assets/(.*)$
+    RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
+    RewriteCond %{REQUEST_URI} /favicon\.svg$
+    RewriteRule ^favicon\.svg$ public/favicon.svg [L]
+
+    # Forward all other requests to public/index.php
+    RewriteRule ^(.*)$ public/index.php [QSA,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+Options -Indexes
+

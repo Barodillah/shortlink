@@ -1,0 +1,19 @@
+# Environment & Config overrides
+.env
+.env.*
+
+# Logs
+storage/logs/*.log
+!storage/logs/.htaccess
+!storage/logs/.gitkeep
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs & Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
